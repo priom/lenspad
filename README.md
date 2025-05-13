@@ -35,3 +35,10 @@ This score provides a holistic view of a creator's on-chain activity and engagem
 **Calculation Note:**
 *   Each raw metric is normalized (scaled, often logarithmically for counts, or as a ratio) to allow fair comparison.
 *   These normalized metrics are then combined using specific weights (reflecting perceived importance) to produce a final reputation score, typically out of 100.
+
+
+## Run Server
+- pnpm i
+- pnpm run dev
+
+
