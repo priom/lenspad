@@ -1,0 +1,7 @@
+[profile.ci.fuzz]
+runs = 10_000
+auto_detect_remappings = false
+zksync = true
+
+lens     = "https://rpc.lens.xyz"          # mainnet, Chain ID 232
+lensTest = "https://rpc.testnet.lens.xyz"  # sepolia testnet, Chain ID 37111

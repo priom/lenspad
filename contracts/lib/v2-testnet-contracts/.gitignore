@@ -1,0 +1,10 @@
+node_modules
+
+# Hardhat
+/cache
+/artifacts
+
+# Foundry
+/out
+/zkout
+/cache_forge

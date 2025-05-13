@@ -1,0 +1,18 @@
+{
+  "name": "@matterlabs/zksync-contracts",
+  "version": "1.0.0-beta.6",
+  "description": "ZKsync Smart Contracts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matter-labs/v2-testnet-contracts.git"
+  },
+  "homepage": "https://zksync.io",
+  "author": "Matter Labs",
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "=2.22.18"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "=5.2.0"
+  }
+}
