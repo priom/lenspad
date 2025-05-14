@@ -1,5 +1,4 @@
 "use client";
-
 import { getPublicClient } from "@/lib/lens/client";
 import { chains } from "@lens-chain/sdk/viem";
 import { LensProvider } from "@lens-protocol/react";
@@ -29,14 +28,16 @@ export const Providers = ({ children }: { children: JSX.Element }) => {
   const publicClient = getPublicClient();
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <ConnectKitProvider>
-            <LensProvider client={publicClient}>{children}</LensProvider>
-          </ConnectKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
-    </ThemeProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            <ConnectKitProvider>
+              <LensProvider client={publicClient}>
+                  {children}
+                </LensProvider>
+            </ConnectKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ThemeProvider>
   );
 };

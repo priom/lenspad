@@ -4,6 +4,7 @@ import type React from "react";
 import "../../public/globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,8 +43,9 @@ export default function RootLayout({
         <footer className="border-t border-border py-6 px-6">
           <div className="container mx-auto">
             <p className="text-center text-muted-foreground uppercase">
-              © 2025 Bucking Fitch
+              © 2025 Not weird at all
             </p>
+            <Toaster></Toaster>
           </div>
         </footer>
       </body>
