@@ -12,7 +12,8 @@ export function ICOList() {
     const { data: saleDetails = [], isLoading: loadingDetails } = useAllSaleDetails(
     shouldFetchDetails ? (sales as Address[]) : []);
 
-    console.log(saleDetails);
+    console.log(sales);
+  
       
   
 

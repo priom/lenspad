@@ -12,6 +12,7 @@ export default function SalePage({ params }: { params: { sale: string } }) {
   const { data: saleDetails, isLoading, error } = useSaleDetails(sale as Address);
   const [lensAmount, setLensAmount] = useState("");
   const [estimatedTokens, setEstimatedTokens] = useState("0");
+  console.log(saleDetails);
 
   const { isConnected } = useAccount();
   const { writeContractAsync, isPending } = useWriteContract();
