@@ -18,7 +18,8 @@ export default function SalePage({ params }: { params: { sale: string } }) {
   const [lensAmount, setLensAmount] = useState("");
   const [estimatedTokens, setEstimatedTokens] = useState("0");
   const { data: reputationScore, isLoading: repLoading } = useReputationScore(
-    saleDetails?.owner.toLowerCase()
+    saleDetails?.owner ? saleDetails.owner.toLowerCase() : undefined
+    // "0x325c0fff1a25ca7a85663d319d4d77a28a9f9781"
   );
   console.log(saleDetails);
 

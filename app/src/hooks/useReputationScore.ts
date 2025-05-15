@@ -1,6 +1,7 @@
 import useSWR from "swr";
 
 const API_URL = "https://lens-bigquery-api-84180858304.us-central1.run.app/api/bigquery/query";
+// const API_URL = "http://localhost:8000/api/bigquery/query";
 
 async function fetchReputationScore(address: string): Promise<number | null> {
   console.log("Fetching for address:", address);
