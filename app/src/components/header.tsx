@@ -1,3 +1,4 @@
+
 import { AccountInfoDialog } from "@/components/account-info";
 import { ThemeToggle } from "@/components/atoms/theme-toggle";
 import { Login } from "@/components/login";
@@ -6,9 +7,12 @@ import { getAuthenticatedAccount } from "@/lib/lens/get-authenticated-account";
 import Link from "next/link";
 
 export default async function Header() {
+
   const account = await getAuthenticatedAccount();
 
-  console.log({ account });
+  const mock = () => {
+    return;
+  }
 
   return (
     <header className="w-full bg-background text-foreground md:sticky top-0 z-10 border-b border-border">
@@ -28,6 +32,7 @@ export default async function Header() {
             <div className="flex">
               <Login />
               <AccountInfoDialog account={account} />
+              { account ? <button> Create an ICO </button> : <div></div> }
             </div>
             <ThemeToggle />
           </div>

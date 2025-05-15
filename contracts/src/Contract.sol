@@ -40,6 +40,7 @@ contract SimpleMintableERC20 is ERC20, ERC20Burnable, ERC20Permit, AccessControl
 
     string private _customName;
     string private _customSymbol;
+    string public imageURI;
 
     constructor() ERC20("", "") ERC20Permit("") {}
 
@@ -52,6 +53,12 @@ contract SimpleMintableERC20 is ERC20, ERC20Burnable, ERC20Permit, AccessControl
 
         _grantRole(DEFAULT_ADMIN_ROLE, admin_);
     }
+
+    function setImageURI(string calldata uri) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(bytes(imageURI).length == 0, "Image already set");
+        imageURI = uri;
+    }
+
 
     // override metadata so it can be set post‑deployment
     function name() public view override returns (string memory) {
@@ -97,6 +104,7 @@ contract ICOSale is ReentrancyGuard {
     uint256 public price;       // payment units for 1e18 tokens
     uint256 public softCap;
     uint256 public hardCap;
+    string public description;
 
     uint256 public totalRaised;
     bool    public finalized;
@@ -119,7 +127,8 @@ contract ICOSale is ReentrancyGuard {
         uint40  _end,
         uint256 _price,
         uint256 _softCap,
-        uint256 _hardCap
+        uint256 _hardCap,
+        string memory _description,
     ) external {
         if (initialized) revert AlreadyInitialized();
         initialized = true;
@@ -132,6 +141,7 @@ contract ICOSale is ReentrancyGuard {
         price        = _price;
         softCap      = _softCap;
         hardCap      = _hardCap;
+        description  = _description;
 
         require(_owner != address(0) && _saleToken != address(0) && _price > 0, "bad args");
         require(_start < _end && _hardCap >= _softCap, "bad caps");

@@ -19,8 +19,8 @@ export function Login() {
 
           if (!isWalletConnected) {
             return (
-                <Button type="button" onClick={show} className="bg-secondary border-0 px-6 md:py-6 text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
-                  CONNECT_WALLET
+                <Button type="button" onClick={show} className="bg-secondary border-0 px-6 md:py-6 text-primary hover:bg-primary hover:text-primary-foreground transition-colors rounded-sm">
+                  CONNECT WALLET
                 </Button>
             );
           }
@@ -42,7 +42,7 @@ export function Login() {
           if (isWalletConnected && authenticatedUser) {
             const displayIdentity = connectKitDisplayName ?? "...";
             return (
-              <div className="flex items-center gap-2 text-sm w-full justify-between">
+              <div className="flex items-center gap-2 text-sm w-full justify-between bg-secondary border-0 ">
                 <span className="text-muted-foreground truncate" title={authenticatedUser.address}>
                   <span className="text-primary font-semibold font-mono">{displayIdentity}</span>
                 </span>
