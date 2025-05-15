@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useWriteContract, useAccount } from "wagmi";
 import { toast } from "sonner";
+import { useReputationScore } from "@/hooks/useReputationScore";
 
 export default function SalePage({ params }: { params: { sale: string } }) {
   const { sale } = params;
@@ -16,6 +17,9 @@ export default function SalePage({ params }: { params: { sale: string } }) {
   } = useSaleDetails(sale as Address);
   const [lensAmount, setLensAmount] = useState("");
   const [estimatedTokens, setEstimatedTokens] = useState("0");
+  const { data: reputationScore, isLoading: repLoading } = useReputationScore(
+    saleDetails?.owner.toLowerCase()
+  );
   console.log(saleDetails);
 
   const { isConnected } = useAccount();
@@ -99,7 +103,12 @@ export default function SalePage({ params }: { params: { sale: string } }) {
             <strong>Owner:</strong> {saleDetails.owner}
           </p>
           <p>
-            <strong>Owner Reputation Score:</strong> {}
+            <strong>Owner Reputation Score:</strong>{" "}
+            {repLoading
+              ? "Loading…"
+              : reputationScore !== null && reputationScore !== undefined
+              ? reputationScore
+              : "N/A"}
           </p>
           <p>
             <strong>Price:</strong> {formatUnits(saleDetails.price, 18)}{" "}
