@@ -20,6 +20,7 @@ export function useSaleDetails(sale: `0x${string}`) {
         "finalized",
         "saleToken",
         "paymentToken",
+        "owner"
       ] as const;
 
       const results = await Promise.all(
@@ -42,6 +43,7 @@ export function useSaleDetails(sale: `0x${string}`) {
         finalized,
         saleToken,
         paymentToken,
+        owner,
       ] = results;
       const [name, symbol] = await Promise.all([
         publicClient.readContract({
@@ -68,6 +70,7 @@ export function useSaleDetails(sale: `0x${string}`) {
         paymentToken: paymentToken as `0x${string}`,
         name,
         symbol,
+        owner: owner as `0x${string}`,
       };
     },
     enabled: !!sale,
