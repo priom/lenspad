@@ -5,7 +5,7 @@ import { formatUnits } from "viem";
 
 export default function DiscoverPage() {
   const { data: sale, isLoading, error } = useSaleDetails("0x6Ef1eEF110E8599857E60CB29A926598D7116B02");
-    console.log(sale);
+
   if (isLoading) return <div className="p-4 border rounded">Loading…</div>;
   if (error || !sale) return <div className="p-4 border rounded">Error loading sale</div>;
 
