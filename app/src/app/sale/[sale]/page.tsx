@@ -7,9 +7,11 @@ import { useState } from "react";
 import { useWriteContract, useAccount } from "wagmi";
 import { toast } from "sonner";
 import { useReputationScore } from "@/hooks/useReputationScore";
+import { use } from "react"; 
 
-export default function SalePage({ params }: { params: { sale: string } }) {
-  const { sale } = params;
+
+export default function SalePage({ params }: { params: Promise<{ sale: string }> }) {
+  const { sale } = use(params);
   const {
     data: saleDetails,
     isLoading,

@@ -57,6 +57,7 @@ export function useSaleDetails(sale: `0x${string}`) {
           functionName: "symbol",
         }),
       ]);
+      console.log("owner", owner)
 
       return {
         start: Number(start),

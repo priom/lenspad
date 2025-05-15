@@ -9,11 +9,7 @@ import Link from "next/link";
 export default async function Header() {
 
   const account = await getAuthenticatedAccount();
-
-  const mock = () => {
-    return;
-  }
-
+  
   return (
     <header className="w-full bg-background text-foreground md:sticky top-0 z-10 border-b border-border">
       <div className="container mx-auto px-6 py-5">
@@ -32,7 +28,15 @@ export default async function Header() {
             <div className="flex">
               <Login />
               <AccountInfoDialog account={account} />
-              { account ? <button> Create an ICO </button> : <div></div> }
+              {account ? (
+                <Link
+                  href="/create-ico"
+                  className="inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold bg-primary text-white hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors"
+                >
+                  Create an ICO
+                </Link>
+              ) : null}
+
             </div>
             <ThemeToggle />
           </div>
