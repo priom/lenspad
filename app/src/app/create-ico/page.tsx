@@ -14,8 +14,8 @@ import { toast } from "sonner";
 /* ──────────────────────────────────────────────── */
 const ICO_FACTORY = "0xYourFactoryAddress";
 const factoryAbi = parseAbi([
-  "function createSale(address saleToken,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap) returns (address)",
-  "function createSaleWithNewToken(string name,string symbol,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap) returns (address,address)"
+  "function createSale(address saleToken,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap,string description) returns (address)",
+  "function createSaleWithNewToken(string name,string symbol,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap,string description) returns (address,address)"
 ]);
 
 /* ──────────────────────────────────────────────── */
@@ -23,17 +23,19 @@ const factoryAbi = parseAbi([
 /* ──────────────────────────────────────────────── */
 interface CreateICOForm {
   useNewToken: boolean;
-  tokenAddress: string; // when useNewToken === false
-  tokenName: string;    // when useNewToken === true
-  tokenSymbol: string;  // when useNewToken === true
-  paymentToken: string; // 0x0… for native
-  start: string;        // ISO datetime‑local string
+  tokenAddress: string;
+  tokenName: string;
+  tokenSymbol: string;
+  paymentToken: string;
+  start: string;
   end: string;
-  price: string;        // human readable; we parse to wei
-  softCap: string;      // ether/erc20 units
+  price: string;
+  softCap: string;
   hardCap: string;
+  description: string;  // ← add this
   image?: FileList;
 }
+
 
 /* ──────────────────────────────────────────────── */
 export default function CreateICOPage() {
@@ -41,6 +43,7 @@ export default function CreateICOPage() {
     defaultValues: {
       useNewToken: true,
       paymentToken: "0x0000000000000000000000000000000000000000",
+      description: "",
     },
   });
 
@@ -88,6 +91,7 @@ export default function CreateICOPage() {
             priceWei,
             softCapWei,
             hardCapWei,
+            data.description,
           ],
         });
       } else {
@@ -174,6 +178,15 @@ export default function CreateICOPage() {
             <Label htmlFor="hardCap">Hard cap</Label>
             <Input id="hardCap" placeholder="100" {...register("hardCap", { required: true })} />
           </div>
+          <div>
+            <Label htmlFor="description">Project description</Label>
+            <Input
+              id="description"
+              placeholder="A short summary of the project or token utility"
+              {...register("description", { required: true })}
+            />
+          </div>
+
           
         </div>
 

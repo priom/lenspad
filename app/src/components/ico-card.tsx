@@ -31,6 +31,11 @@ export function IcoCard({
   totalRaised,
   end,
 }: IcoCardProps) {
+  console.log("total", totalRaised)
+  if (totalRaised > BigInt(Number.MAX_SAFE_INTEGER)) {
+    console.warn("totalRaised is too large, may lose precision");
+  }
+  const raised = formatBigNumber(Number(totalRaised) / 1e18, 1);
   return (
     <Link href={`/sale/${sale}`}>
       <div className="h-72 flex flex-col justify-between relative border border-border p-4 hover:border-primary/20 transition-colors group break-words">
@@ -63,7 +68,7 @@ export function IcoCard({
             <span className="text-xs uppercase">
               funds<span className="text-primary font-bold">_</span>raised:{" "}
               <span className="font-mono text-sm">
-                {formatBigNumber(totalRaised, 1)}
+                {raised} GHO
               </span>
             </span>
           </div>

@@ -11,5 +11,6 @@ export const saleAbi = parseAbi([
   "function finalized() view returns (bool)",
   "function saleToken() view returns (address)",
   "function paymentToken() view returns (address)",
-  "function owner() view returns (address)"
+  "function owner() view returns (address)",
+  "function description() view returns (string)" 
 ]);

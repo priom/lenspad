@@ -14,7 +14,7 @@ export default async function Home() {
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <Link
-            href="/create"
+            href="/create-ico"
             className="px-6 py-3 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             Launch Your ICO

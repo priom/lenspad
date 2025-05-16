@@ -128,7 +128,7 @@ contract ICOSale is ReentrancyGuard {
         uint256 _price,
         uint256 _softCap,
         uint256 _hardCap,
-        string memory _description,
+        string memory _description
     ) external {
         if (initialized) revert AlreadyInitialized();
         initialized = true;
@@ -246,9 +246,10 @@ contract ICOFactory is Ownable {
         uint40  end,
         uint256 price,
         uint256 softCap,
-        uint256 hardCap
+        uint256 hardCap,
+        string memory description
     ) external returns (address sale) {
-        sale = _deploySale(msg.sender, saleToken, paymentToken, start, end, price, softCap, hardCap);
+        sale = _deploySale(msg.sender, saleToken, paymentToken, start, end, price, softCap, hardCap, description);
         saleToToken[sale] = saleToken;
         emit SaleCreated(sale, msg.sender, saleToken, false);
     }
@@ -262,14 +263,15 @@ contract ICOFactory is Ownable {
         uint40  end,
         uint256 price,
         uint256 softCap,
-        uint256 hardCap
+        uint256 hardCap,
+        string memory description
     ) external returns (address sale, address token) {
         // 1. Deploy and init token
         token = address(new SimpleMintableERC20());
         SimpleMintableERC20(token).initialize(name, symbol, address(this));
 
         // 2. Deploy the crowdsale contract
-        sale = _deploySale(msg.sender, token, paymentToken, start, end, price, softCap, hardCap);
+        sale = _deploySale(msg.sender, token, paymentToken, start, end, price, softCap, hardCap, description);
 
         // 3. Wire roles so sale can mint & founder is admin
         bytes32 MINTER = SimpleMintableERC20(token).MINTER_ROLE();
@@ -293,10 +295,11 @@ contract ICOFactory is Ownable {
         uint40  end,
         uint256 price,
         uint256 softCap,
-        uint256 hardCap
+        uint256 hardCap,
+        string memory description
     ) internal returns (address sale) {
         sale = address(new ICOSale());
-        ICOSale(payable(sale)).initialize(founder, saleToken, paymentToken, start, end, price, softCap, hardCap);
+        ICOSale(payable(sale)).initialize(founder, saleToken, paymentToken, start, end, price, softCap, hardCap, description);
         allSales.push(sale);
     }
 

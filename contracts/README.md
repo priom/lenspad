@@ -1,3 +1,11 @@
+forge create \
+  src/Contract.sol:ICOFactory \
+  --zksync \
+  --rpc-url "https://rpc.lens.xyz" \
+  --private-key "$PRIVATE_KEY" \
+  --json
+  
+
 # <h1 align="center"> Forge Template </h1>
 
 **Template repository for getting started quickly with Foundry projects**

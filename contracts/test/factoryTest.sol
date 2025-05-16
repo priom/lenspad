@@ -28,7 +28,8 @@ contract ICOFactoryTest is Test {
             uint40(block.timestamp + 1 days),
             1 ether,                          // 1 ETH per 1e18 tokens
             1 ether,
-            10 ether
+            10 ether,
+            "Test token sale"
         );
 
         assertTrue(sale  != address(0), "sale addr-zero");
@@ -49,7 +50,8 @@ contract ICOFactoryTest is Test {
             uint40(block.timestamp + 1 days),
             1 ether,
             1 ether,
-            10 ether
+            10 ether,
+            "This is a description"
         );
 
         vm.deal(contributor, 10 ether);
@@ -75,7 +77,8 @@ contract ICOFactoryTest is Test {
             uint40(block.timestamp + 1 days),
             1 ether,
             1 ether,
-            3 ether                               // hard cap = 3 ETH
+            3 ether,                               // hard cap = 3 ETH
+            "Exceed cap refund test"
         );
 
         vm.deal(contributor, 10 ether);
@@ -100,7 +103,8 @@ contract ICOFactoryTest is Test {
             uint40(block.timestamp + 1),          // ends in 1 sec
             1 ether,
             1 ether,
-            5 ether
+            5 ether,
+            "Exceed cap refund test"
         );
 
         vm.prank(contributor);
@@ -127,7 +131,8 @@ contract ICOFactoryTest is Test {
             uint40(block.timestamp + 1),
             1 ether,
             5 ether,                              // softCap 5
-            10 ether
+            10 ether,
+            "deploy"
         );
 
         vm.prank(contributor);

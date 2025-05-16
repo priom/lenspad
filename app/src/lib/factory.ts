@@ -13,5 +13,5 @@ export const factoryAbi = parseAbi([
 
 export const publicClient = createPublicClient({
   chain: zksyncSepoliaTestnet,
-  transport: http("https://rpc.testnet.lens.dev"),
+  transport: http("https://rpc.lens.xyz"),
 });

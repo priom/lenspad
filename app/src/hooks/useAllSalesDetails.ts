@@ -48,7 +48,8 @@ export function useAllSaleDetails(sales: `0x${string}`[]) {
                 finalized,
                 saleToken,
                 paymentToken,
-                owner
+                owner,
+                description,
               ] = await Promise.all([
                 publicClient.readContract({ address: sale, abi: saleAbi, functionName: "start" }),
                 publicClient.readContract({ address: sale, abi: saleAbi, functionName: "end" }),
@@ -60,6 +61,7 @@ export function useAllSaleDetails(sales: `0x${string}`[]) {
                 publicClient.readContract({ address: sale, abi: saleAbi, functionName: "saleToken" }),
                 publicClient.readContract({ address: sale, abi: saleAbi, functionName: "paymentToken" }),
                 publicClient.readContract({ address: sale, abi: saleAbi, functionName: "owner" }),
+                publicClient.readContract({ address: sale, abi: saleAbi, functionName: "description" }),
               ]);
   
               const [name, symbol, imageURI] = await Promise.all([
@@ -95,6 +97,7 @@ export function useAllSaleDetails(sales: `0x${string}`[]) {
                 symbol,
                 imageURI,
                 owner: owner as `0x${string}`,
+                description
               };
             } catch (err) {
               console.error("Failed to fetch sale:", sale, err);
