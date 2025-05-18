@@ -2,12 +2,17 @@
 
 import { useForm } from "react-hook-form";
 import { parseUnits, parseAbi } from "viem";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+import { uploadImageToLens } from "@/lib/lens/image-upload";
 
 /* ──────────────────────────────────────────────── */
 /*                 ABI fragments                    */
@@ -15,7 +20,7 @@ import { toast } from "sonner";
 const ICO_FACTORY = "0xYourFactoryAddress";
 const factoryAbi = parseAbi([
   "function createSale(address saleToken,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap,string description) returns (address)",
-  "function createSaleWithNewToken(string name,string symbol,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap,string description) returns (address,address)"
+  "function createSaleWithNewToken(string name,string symbol,address paymentToken,uint40 start,uint40 end,uint256 price,uint256 softCap,uint256 hardCap,string description) returns (address,address)",
 ]);
 
 /* ──────────────────────────────────────────────── */
@@ -32,10 +37,9 @@ interface CreateICOForm {
   price: string;
   softCap: string;
   hardCap: string;
-  description: string;  // ← add this
+  description: string; // ← add this
   image?: FileList;
 }
-
 
 /* ──────────────────────────────────────────────── */
 export default function CreateICOPage() {
@@ -59,7 +63,7 @@ export default function CreateICOPage() {
   useWaitForTransactionReceipt({
     hash: txHash,
     confirmations: 2,
-    query: { enabled: !!txHash }
+    query: { enabled: !!txHash },
   });
 
   /* ───────── onSubmit ───────── */
@@ -68,12 +72,25 @@ export default function CreateICOPage() {
       toast.warning("Please connect your wallet first");
       return;
     }
+
+    // Upload image and append storageKey to description
+    if (data.image && data.image.length > 0) {
+      const file = data.image[0];
+      try {
+        const { storageKey } = await uploadImageToLens(file);
+        data.description = `${data.description}+${storageKey}`; // <-- append here
+      } catch (e: any) {
+        toast.error("Image upload failed: " + (e?.message || "Unknown error"));
+        return;
+      }
+    }
+
     try {
       /* convert inputs */
       const startUnix = Math.floor(new Date(data.start).getTime() / 1000);
-      const endUnix   = Math.floor(new Date(data.end).getTime() / 1000);
+      const endUnix = Math.floor(new Date(data.end).getTime() / 1000);
 
-      const priceWei   = parseUnits(data.price, 18); // price is “payment per 1 token”
+      const priceWei = parseUnits(data.price, 18); // price is “payment per 1 token”
       const softCapWei = parseUnits(data.softCap, 18);
       const hardCapWei = parseUnits(data.hardCap, 18);
 
@@ -135,48 +152,84 @@ export default function CreateICOPage() {
           <>
             <div>
               <Label htmlFor="tokenName">Token name</Label>
-              <Input id="tokenName" placeholder="e.g. Lens Coin" {...register("tokenName", { required: true })} />
+              <Input
+                id="tokenName"
+                placeholder="e.g. Lens Coin"
+                {...register("tokenName", { required: true })}
+              />
             </div>
             <div>
               <Label htmlFor="tokenSymbol">Token symbol</Label>
-              <Input id="tokenSymbol" placeholder="e.g. LENS" {...register("tokenSymbol", { required: true })} />
+              <Input
+                id="tokenSymbol"
+                placeholder="e.g. LENS"
+                {...register("tokenSymbol", { required: true })}
+              />
             </div>
           </>
         ) : (
           <div>
             <Label htmlFor="tokenAddress">Existing token address</Label>
-            <Input id="tokenAddress" placeholder="0x…" {...register("tokenAddress", { required: true })} />
+            <Input
+              id="tokenAddress"
+              placeholder="0x…"
+              {...register("tokenAddress", { required: true })}
+            />
           </div>
         )}
 
         <div>
           <Label htmlFor="paymentToken">Payment token (0x0… for native)</Label>
-          <Input id="paymentToken" placeholder="0x…" {...register("paymentToken", { required: true })} />
+          <Input
+            id="paymentToken"
+            placeholder="0x…"
+            {...register("paymentToken", { required: true })}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label htmlFor="start">Sale start</Label>
-            <Input id="start" type="datetime-local" {...register("start", { required: true })} />
+            <Input
+              id="start"
+              type="datetime-local"
+              {...register("start", { required: true })}
+            />
           </div>
           <div>
             <Label htmlFor="end">Sale end</Label>
-            <Input id="end" type="datetime-local" {...register("end", { required: true })} />
+            <Input
+              id="end"
+              type="datetime-local"
+              {...register("end", { required: true })}
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label htmlFor="price">Price (payment per token)</Label>
-            <Input id="price" placeholder="0.0005" {...register("price", { required: true })} />
+            <Input
+              id="price"
+              placeholder="0.0005"
+              {...register("price", { required: true })}
+            />
           </div>
           <div>
             <Label htmlFor="softCap">Soft cap</Label>
-            <Input id="softCap" placeholder="10" {...register("softCap", { required: true })} />
+            <Input
+              id="softCap"
+              placeholder="10"
+              {...register("softCap", { required: true })}
+            />
           </div>
           <div>
             <Label htmlFor="hardCap">Hard cap</Label>
-            <Input id="hardCap" placeholder="100" {...register("hardCap", { required: true })} />
+            <Input
+              id="hardCap"
+              placeholder="100"
+              {...register("hardCap", { required: true })}
+            />
           </div>
           <div>
             <Label htmlFor="description">Project description</Label>
@@ -186,8 +239,15 @@ export default function CreateICOPage() {
               {...register("description", { required: true })}
             />
           </div>
-
-          
+          <div>
+            <Label htmlFor="image">Project image (optional)</Label>
+            <Input
+              id="image"
+              type="file"
+              accept="image/*"
+              {...register("image")}
+            />
+          </div>
         </div>
 
         <Button type="submit" disabled={isPending}>
