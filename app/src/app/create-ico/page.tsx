@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { parseUnits, parseAbi } from "viem";
+import { parseUnits, parseAbi, Address } from "viem";
 import {
   useAccount,
   useWaitForTransactionReceipt,
@@ -102,7 +102,7 @@ export default function CreateICOPage() {
           args: [
             data.tokenName,
             data.tokenSymbol,
-            data.paymentToken,
+            data.paymentToken as Address,
             startUnix,
             endUnix,
             priceWei,
@@ -117,13 +117,14 @@ export default function CreateICOPage() {
           abi: factoryAbi,
           functionName: "createSale",
           args: [
-            data.tokenAddress,
-            data.paymentToken,
+            data.tokenAddress as Address,
+            data.paymentToken as Address,
             startUnix,
             endUnix,
             priceWei,
             softCapWei,
             hardCapWei,
+            data.description
           ],
         });
       }

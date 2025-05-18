@@ -28,6 +28,7 @@ async function fetchReputationScore(address: string): Promise<number | null> {
     return null;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
 export function useReputationScore(address: string | undefined) {

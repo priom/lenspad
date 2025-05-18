@@ -29,12 +29,18 @@ function SaleHeader({
 
 function extractStorageKey(description: string): string | null {
   const match = description.match(/\+([a-zA-Z0-9_]+)/);
+  console.log(match, "match");
   return match ? match[1] : null;
 }
 
 function storageKeyToGroveUrl(storageKey: string) {
   return `https://api.grove.storage/${storageKey}`;
 }
+
+function removeImageHash(description: string): string {
+  return description.replace(/\s*\+([a-zA-Z0-9_]+)\s*$/, '').trim();
+}
+
 
 export default function SalePage({
   params,
@@ -56,7 +62,7 @@ export default function SalePage({
   const [lensAmount, setLensAmount] = useState("");
   const [estimatedTokens, setEstimatedTokens] = useState("0");
   const { data: reputationScore, isLoading: repLoading } = useReputationScore(
-    saleDetails?.owner ? saleDetails.owner.toLowerCase() : undefined
+    saleDetails?.owner ? (saleDetails.owner as string).toLowerCase() : undefined
   );
   console.log(saleDetails);
 
@@ -83,7 +89,7 @@ export default function SalePage({
 
     try {
       const parsed = parseUnits(value || "0", 18);
-      const estimated = (parsed * 10n ** 18n) / saleDetails.price;
+      const estimated = (parsed * 10n ** 18n) / (saleDetails.price as bigint) ;
       setEstimatedTokens(formatUnits(estimated, 18));
     } catch {
       setEstimatedTokens("0");
@@ -115,7 +121,6 @@ export default function SalePage({
         ],
         functionName: "contribute",
         args: [lensAmountInWei], // <-- always passed
-        value: isNative ? lensAmountInWei : undefined,
       });
 
       toast.success("Contribution submitted!");
@@ -128,7 +133,7 @@ export default function SalePage({
   // ...inside SalePage, after all hooks and before return...
 
   const imageStorageKey = saleDetails.description
-    ? extractStorageKey(saleDetails.description)
+    ? extractStorageKey(saleDetails.description as string)
     : null;
   const imageURI = imageStorageKey
     ? storageKeyToGroveUrl(imageStorageKey)
@@ -141,13 +146,12 @@ export default function SalePage({
         <SaleHeader
           name={saleDetails.name}
           symbol={saleDetails.symbol}
-          imageURI={saleDetails.imageURI}
         />
         {saleDetails.description && (
           <div className="max-w-2xl">
             <h2 className="text-xl font-semibold mb-2">Project Description</h2>
             <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">
-              {saleDetails.description}
+              {removeImageHash(saleDetails.description as string)}
             </p>
           </div>
         )}
@@ -198,19 +202,19 @@ export default function SalePage({
               : "N/A"}
           </p>
           <p>
-            <strong>Price:</strong> {formatUnits(saleDetails.price, 18)}{" "}
+            <strong>Price:</strong> {formatUnits(saleDetails.price as bigint, 18)}{" "}
             LENS/token
           </p>
           <p>
-            <strong>Soft Cap:</strong> {formatUnits(saleDetails.softCap, 18)}{" "}
+            <strong>Soft Cap:</strong> {formatUnits(saleDetails.softCap as bigint, 18)}{" "}
             LENS
           </p>
           <p>
-            <strong>Hard Cap:</strong> {formatUnits(saleDetails.hardCap, 18)}{" "}
+            <strong>Hard Cap:</strong> {formatUnits(saleDetails.hardCap as bigint, 18)}{" "}
             LENS
           </p>
           <p>
-            <strong>Raised:</strong> {formatUnits(saleDetails.totalRaised, 18)}{" "}
+            <strong>Raised:</strong> {formatUnits(saleDetails.totalRaised as bigint, 18)}{" "}
             LENS
           </p>
           <div className="w-full bg-muted h-4 rounded overflow-hidden">
@@ -218,9 +222,9 @@ export default function SalePage({
               className="h-full bg-primary transition-all"
               style={{
                 width: `${getProgressPercent(
-                  saleDetails.totalRaised,
-                  saleDetails.softCap,
-                  saleDetails.hardCap
+                  saleDetails.totalRaised as bigint,
+                  saleDetails.softCap as bigint,
+                  saleDetails.hardCap as bigint
                 )}%`,
               }}
             />
