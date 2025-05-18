@@ -27,14 +27,34 @@ export function IcoCard({
   sale,
   name,
   symbol,
-  imageURI,
   totalRaised,
   end,
+  description,
 }: IcoCardProps) {
   console.log("total", totalRaised)
   if (totalRaised > BigInt(Number.MAX_SAFE_INTEGER)) {
     console.warn("totalRaised is too large, may lose precision");
   }
+
+
+  function extractStorageKey(description: string): string | null {
+    const match = description.match(/\+([a-zA-Z0-9_]+)/);
+    console.log(match, "match");
+    return match ? match[1] : null;
+  }
+
+  
+function storageKeyToGroveUrl(storageKey: string) {
+return `https://api.grove.storage/${storageKey}`;
+}
+
+const imageStorageKey = description
+? extractStorageKey(description as string)
+: null;
+const imageURI = imageStorageKey
+? storageKeyToGroveUrl(imageStorageKey)
+: undefined;
+
   const raised = formatBigNumber(Number(totalRaised) / 1e18, 1);
   return (
     <Link href={`/sale/${sale}`}>
@@ -84,6 +104,7 @@ export function IcoCard({
     </Link>
   );
 }
+
 
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
