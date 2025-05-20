@@ -16,7 +16,7 @@ export default async function Header() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           <div className="md:col-span-2">
             <Link href="/" className="text-xl font-bold tracking-tight">
-              LENS<span className="text-primary">_</span>APP
+              LENS<span className="text-primary"></span>PAD
             </Link>
           </div>
 
