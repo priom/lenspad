@@ -38,7 +38,8 @@ export function IcoCard({
 
 
   function extractStorageKey(description: string): string | null {
-    const match = description.match(/\+([a-zA-Z0-9_]+)/);
+    console.log(description, "description");
+    const match = description.match(/\+\s*([a-fA-F0-9]+)/);
     console.log(match, "match");
     return match ? match[1] : null;
   }

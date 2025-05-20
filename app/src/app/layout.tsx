@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lens App",
+  title: "Lens Pad",
   description: "Future of decentralized social",
   icons: [{ rel: "icon", url: "/favicon.svg" }],
 };

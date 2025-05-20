@@ -28,7 +28,8 @@ function SaleHeader({
 }
 
 function extractStorageKey(description: string): string | null {
-  const match = description.match(/\+([a-zA-Z0-9_]+)/);
+  console.log(description, "description");
+  const match = description.match(/\+\s*([a-fA-F0-9]+)/);
   console.log(match, "match");
   return match ? match[1] : null;
 }
@@ -141,7 +142,7 @@ export default function SalePage({
   const imageURI = imageStorageKey
     ? storageKeyToGroveUrl(imageStorageKey)
     : undefined;
-
+  console.log(imageURI, "imageURI");
   return (
     <div className="max-w-6xl mx-auto py-10 px-4 flex flex-col gap-10">
       {/* Column layout: Header + Description */}
