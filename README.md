@@ -1,6 +1,6 @@
 # LensPad
 
-LensPad is an ICO launch platform that’s powered by reputation and community. Easily create an ICO and crowdfund your coin.    
+LensPad is an ICO launch platform that’s powered by reputation and community. Easily create an ICO and crowdfund your coin and get a reputation based on your lens profile!    
 Launch your token — You fill out a form with name, symbol, price, duration, and whether you want to mint a new ERC-20 token or use your own.
 Sell it to anyone — People can visit your sale page, see your reputation based off of your lens profile and social history, and invest with one click with our own built reputation score system.
 
