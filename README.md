@@ -67,8 +67,3 @@ This score provides a holistic view of a creator's on-chain activity and engagem
 curl -X POST http://localhost:3000/api/bigquery/query \
   -H "Content-Type: application/json" \
   -d '{"query": "SELECT creator_address_web3, reputation_score FROM `priom-sidekick.lens_mainnet_dataset.lens_mainnet_repscore` LIMIT 10"}' | jq
-
-### GCP Hosted
-curl -X POST https://lens-bigquery-api-84180858304.us-central1.run.app/api/bigquery/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "SELECT creator_address_web3, reputation_score FROM `priom-sidekick.lens_mainnet_dataset.lens_mainnet_repscore` LIMIT 10"}' | jq
