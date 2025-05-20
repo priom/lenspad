@@ -1,6 +1,26 @@
-# lens-spring-hack
+# LensPad
 
-**Reputation Score Metrics Overview**
+LensPad is an ICO launch platform that’s powered by reputation and community. Easily create an ICO and crowdfund your coin.    
+Launch your token — You fill out a form with name, symbol, price, duration, and whether you want to mint a new ERC-20 token or use your own.
+Sell it to anyone — People can visit your sale page, see your reputation and social history, and invest with one click with our own built reputation score system.
+
+# Future features 
+
+Lens Integration
+- We want to have lens profile integrated so that we can see the different users backing tokens they support
+
+Lens groups
+- A lens group will be created when the ICO is created 
+- Auto-join the ICO Lens Group after a user contributes 
+- Token holders form a social DAO instantly
+
+
+Transparency Dashboard
+
+- Display real-time contributions (who invested, how much)
+
+
+# Reputation Score Metrics Overview 
 
 This score provides a holistic view of a creator's on-chain activity and engagement on the Lens Chain. It is calculated based on the following metrics, which are normalized and weighted:
 
