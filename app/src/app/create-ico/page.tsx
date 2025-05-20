@@ -78,7 +78,7 @@ export default function CreateICOPage() {
       const file = data.image[0];
       try {
         const { storageKey } = await uploadImageToLens(file);
-        data.description = `${data.description}+${storageKey}`; // <-- append here
+        data.description = `${data.description}+ ${storageKey}`; // <-- append here
       } catch (e: any) {
         toast.error("Image upload failed: " + (e?.message || "Unknown error"));
         return;

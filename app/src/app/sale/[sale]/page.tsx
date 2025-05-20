@@ -108,20 +108,23 @@ export default function SalePage({
         saleDetails.paymentToken ===
         "0x0000000000000000000000000000000000000000";
 
-      await writeContractAsync({
-        address: sale as Address,
-        abi: [
+        const contributePayableAbi = [
           {
             name: "contribute",
             type: "function",
-            stateMutability: isNative ? "payable" : "nonpayable",
+            stateMutability: "payable",
             inputs: [{ name: "amount", type: "uint256" }],
             outputs: [],
           },
-        ],
-        functionName: "contribute",
-        args: [lensAmountInWei], // <-- always passed
-      });
+        ] as const;
+      
+        await writeContractAsync({
+          address: sale as Address,
+          abi: contributePayableAbi,
+          functionName: "contribute",
+          args: [lensAmountInWei],
+          value: lensAmountInWei,          // ✅ required, matches overload
+        });
 
       toast.success("Contribution submitted!");
     } catch (err: any) {

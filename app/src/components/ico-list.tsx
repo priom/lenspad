@@ -7,7 +7,7 @@ import { Address } from "viem";
 
 export function ICOList() {
   const { data: sales = [], isLoading, error } = useSales();
-    console.log(sales);
+    console.log("sales",sales);
     const shouldFetchDetails = !isLoading && sales.length > 0;
     const { data: saleDetails = [], isLoading: loadingDetails } = useAllSaleDetails(
     shouldFetchDetails ? (sales as Address[]) : []);

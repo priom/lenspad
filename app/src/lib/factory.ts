@@ -1,6 +1,8 @@
 import { http, createPublicClient, parseAbi } from "viem";
 import { zksyncSepoliaTestnet } from "viem/chains";
 
+// 0x93B418C845C4b654a89a11CfeA9917C2D3F37582
+// 0xAd1F4f3E03Fc13D577AAD001A2a56Ec27B238518
 export const FACTORY = "0x93B418C845C4b654a89a11CfeA9917C2D3F37582";
 
 export const factoryAbi = parseAbi([
